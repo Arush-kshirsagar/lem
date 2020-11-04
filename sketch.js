@@ -3,8 +3,8 @@ const Engine = Matter.Engine;
 const World = Matter.World;
 const Bodies = Matter.Bodies;
 const Body = Matter.Body;
-
-var paper,g1,g2,g3;
+const Render=Matter.Render;
+var paper,dustbin,ground
 
 function preload()
 {
@@ -19,10 +19,18 @@ function setup() {
 	world = engine.world;
 
 	//Create the Bodies Here.
-	ground = new Ground(600,height,1200,20);
-	g1=new Ground(500,500,200,20);
-	g2=new Ground(490,500,20,100);
-	g3=new Ground(510,500,20,100);
+	ground = new Ground(width/2,670,width,20);
+	paper=new Paper(200,200,20);
+	dustbin=new Dustbin(500,500,200,20,470,500,20,100,530,500,20,100);
+  var render=Render.create=(){
+element:document.body;
+engine:Engine;
+options:{
+	width=43
+	height=40
+	frames=false
+}
+  }
 
 
 	Engine.run(engine);
@@ -34,11 +42,16 @@ function draw() {
   rectMode(CENTER);
   background(0);
   paper.display();
-  g1.display();
-  g2.display();
-  g3.display();
+  ground.display();
+  dustbin.display();
+
   drawSprites();
  
+}
+function keyPressed(){
+	if(keyDown===UP_ARROW){
+Matter.Body.applyForce(paperObject.body,paperObject.body.position,{x:85,y:85})
+	}
 }
 
 
